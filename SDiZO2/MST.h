@@ -3,6 +3,7 @@
 #include <vector>
 #include <queue>
 using namespace std;
+//typedef vector<sasiedzi> sasiad;
 struct Edge {
 	int v0, v1, waga;
 	//umozliwienie stworzenia kolejki malejacej
@@ -10,18 +11,28 @@ struct Edge {
 		return waga > other.waga;
 	}
 };
+struct sasiedzi {
+	int v1, waga;
+};
 class MST
 	
 {
 public:
+	vector<int> visited;
+	int waga;
 	priority_queue<Edge> edges;
+	int** macierz;
+	int** treeMatrix;
+	vector<vector<sasiedzi>> treeList;
+	vector<vector<sasiedzi>> listaSasiadow;
 	int liczbaWierzcholkow;
 	int liczbaKrawedzi;
-	vector<vector<int>> macierzSasiedztwa;
 	void loadFromFile(string fileName);
 	void display();
 	void generate(int liczbaWierzcholkow, int gestosc);
-	void kruskal();
+	void primMacierz();
+	void primLista();
 	void test();
+	void clearTree();
 };
 

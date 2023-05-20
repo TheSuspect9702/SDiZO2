@@ -1,4 +1,5 @@
 ﻿#include <iostream>
+#include <conio.h>
 #include "MST.h"
 
 using namespace std;
@@ -14,11 +15,12 @@ void menu_MST() {
         cout << "1.Wczytaj z pliku" << endl;
         cout << "2.Utworz losowo" << endl;
         cout << "3.Wyswietl" << endl;
-        cout << "4.Algorytm Kruskala" << endl;
-        cout << "5.Test (pomiary)" << endl;
+        cout << "4.Algorytm Prima dla macierzy" << endl;
+        cout << "5.Algorytm Prima dla listy" << endl;
+        cout << "6.Test (pomiary)" << endl;
         cout << "0.Powrot do menu" << endl;
         cout << "Podaj opcje: ";
-        cin >> option;
+        option = _getche();
         cout << endl;
         switch (option) {
         case '1':
@@ -40,9 +42,30 @@ void menu_MST() {
             myMST.display();
             break;
         case '4':
-            myMST.kruskal();
+            myMST.primMacierz();
+            cout << "Minimalne drzewo spinajace: " << endl << " ";
+            for (int i = 0; i < myMST.liczbaWierzcholkow; i++)
+                cout << " " << i;
+            for (int i = 0; i < myMST.liczbaWierzcholkow; i++) {
+                cout << endl << i << " ";
+                for (int j = 0; j < myMST.liczbaWierzcholkow; j++) {
+                    cout << myMST.treeMatrix[i][j] << " ";
+                }
+            }
+            cout << endl << "Waga minimalnego drzewa spinajacego: " << myMST.waga;
             break;
-        case '5': 
+        case '5':
+            myMST.primLista();
+            cout << endl << "LISTA SASIADOW";
+            for (int i = 0; i < myMST.treeList.size(); i++) {
+                cout << endl << i << ": ";
+                for (int j = 0; j < myMST.treeList[i].size(); j++) {
+                    cout << myMST.treeList[i][j].v1 << ":" << myMST.treeList[i][j].waga << " ";
+                }
+            }
+            cout << endl << "Waga minimalnego drzewa spinajacego: " << myMST.waga;
+            break;
+        case '6': 
             myMST.test();
             break;
         }
@@ -61,7 +84,7 @@ int main()
         cout << "b) Wyznaczenie najkrotszej sciezki\n";
         cout << "c) Zakoncz program\n";
         cout << "Podaj opcje: ";
-        cin >> wybor;
+        wybor = _getche();
         switch (wybor) {
         case 'a':
             menu_MST();
