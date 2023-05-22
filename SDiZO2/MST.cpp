@@ -10,6 +10,7 @@ using namespace std;
 
 void MST::loadFromFile(string fileName)
 {
+	clear();
 	//dodac czyszczenie dotychczasowego grafu
 	ifstream read(fileName);
 	string dane;
@@ -28,11 +29,6 @@ void MST::loadFromFile(string fileName)
 		macierz[i] = temp;
 	}
 	int w1, w2, w;
-	//najpierw tworze pusta strukture o zadanych parametrach
-	// nastepnie wypelniam ja zgodnie z danymi z pliku 
-	// na podstawie struktury tworze priorytetowa liste krawedzi 
-	//vector<vector<int>> temp(vector<int>(liczbaWierzcholkow,0));
-	//tworzenie kolejki priorytetowej krawedzi (kopiec)
 	for (int i = 0; i < liczbaKrawedzi; i++) {
 		sasiedzi nowysasiad;
 		sasiedzi nowysasiad1;
@@ -94,7 +90,7 @@ void MST::generate(int liczbaWierzcholkow, int gestosc)
 
 void MST::primMacierz()
 {
-	clearTree();
+	clearTreeMatrix();
 	treeMatrix = new int* [liczbaWierzcholkow];
 	for (int i = 0; i < liczbaWierzcholkow; i++) {
 		int* temp = new int[liczbaWierzcholkow];
@@ -127,7 +123,7 @@ void MST::primMacierz()
 
 void MST::primLista()
 {
-	clearTree();
+	clearTreeList();
 	for (int i = 0; i < liczbaWierzcholkow; i++) {
 		vector<sasiedzi> nowySasiad;
 		treeList.push_back(nowySasiad);
@@ -156,19 +152,35 @@ void MST::primLista()
 
 	}
 }
+
 void MST::test()
 {
 
 }
 
-void MST::clearTree()
+void MST::clearTreeMatrix()
 {
-	delete treeMatrix;
-	treeList.clear();
-	while(edges.size() >0)
+	delete[]treeMatrix;
+	while (edges.size() > 0)
 		edges.pop();
 	visited.clear();
 	waga = 0;
+}
+
+void MST::clearTreeList()
+{
+	treeList.clear();
+	while (edges.size() > 0)
+		edges.pop();
+	visited.clear();
+	waga = 0;
+}
+
+void MST::clear()
+{
+	delete []macierz;
+	//delete macierz;
+	listaSasiadow.clear();
 }
 
 

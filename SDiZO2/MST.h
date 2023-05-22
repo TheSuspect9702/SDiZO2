@@ -3,7 +3,7 @@
 #include <vector>
 #include <queue>
 using namespace std;
-//typedef vector<sasiedzi> sasiad;
+
 struct Edge {
 	int v0, v1, waga;
 	//umozliwienie stworzenia kolejki malejacej
@@ -33,6 +33,8 @@ public:
 	void primMacierz();
 	void primLista();
 	void test();
-	void clearTree();
+	void clearTreeMatrix();	
+	void clearTreeList();
+	void clear();
 };
 
