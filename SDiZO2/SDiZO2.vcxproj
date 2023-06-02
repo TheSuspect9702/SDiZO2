@@ -127,13 +127,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Dijkstra.cpp" />
     <ClCompile Include="MST.cpp" />
     <ClCompile Include="SDiZO2.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Dijkstra.h" />
     <ClInclude Include="MST.h" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="droga1.txt" />
+    <Text Include="droga2.txt" />
     <Text Include="mst1.txt" />
     <Text Include="mst2.txt" />
   </ItemGroup>

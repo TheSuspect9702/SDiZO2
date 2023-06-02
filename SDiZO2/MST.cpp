@@ -11,7 +11,6 @@ using namespace std;
 void MST::loadFromFile(string fileName)
 {
 	clear();
-	//dodac czyszczenie dotychczasowego grafu
 	ifstream read(fileName);
 	string dane;
 	read >> dane;
@@ -66,9 +65,9 @@ void MST::display()
 	}
 	cout << endl << "LISTA SASIADOW";
 	for (int i = 0; i < listaSasiadow.size(); i++) {
-		cout << endl << i << ": ";
+		cout << endl << i;
 		for (int j = 0; j < listaSasiadow[i].size(); j++) {
-			cout << listaSasiadow[i][j].v1 << ":" << listaSasiadow[i][j].waga << " ";
+			cout << " => " << listaSasiadow[i][j].v1 << ":" << listaSasiadow[i][j].waga;
 		}
 	}
 }
@@ -111,7 +110,7 @@ void MST::primMacierz()
 				edges.push(edge);
 			}
 		}
-		while (count(visited.begin(), visited.end(), edges.top().v1) && count(visited.begin(), visited.end(), edges.top().v0))
+		while (count(visited.begin(), visited.end(), edges.top().v1) )
 			edges.pop();
 		visited.push_back(edges.top().v1);
 		waga += edges.top().waga;
@@ -137,7 +136,7 @@ void MST::primLista()
 			edge.waga = listaSasiadow[visited[visited.size() - 1]][i].waga;
 			edges.push(edge);
 		}
-		while (count(visited.begin(), visited.end(), edges.top().v1) && count(visited.begin(), visited.end(), edges.top().v0))
+		while (count(visited.begin(), visited.end(), edges.top().v1))
 			edges.pop();
 		visited.push_back(edges.top().v1);
 		sasiedzi nowysasiad,nowysasiad1;

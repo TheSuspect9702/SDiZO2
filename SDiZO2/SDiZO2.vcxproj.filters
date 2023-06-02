@@ -21,14 +21,22 @@
     <ClCompile Include="MST.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
+    <ClCompile Include="Dijkstra.cpp">
+      <Filter>Pliki źródłowe</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MST.h">
+      <Filter>Pliki nagłówkowe</Filter>
+    </ClInclude>
+    <ClInclude Include="Dijkstra.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="mst1.txt" />
     <Text Include="mst2.txt" />
+    <Text Include="droga1.txt" />
+    <Text Include="droga2.txt" />
   </ItemGroup>
 </Project>
