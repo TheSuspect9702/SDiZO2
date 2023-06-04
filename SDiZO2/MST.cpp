@@ -72,10 +72,16 @@ void MST::display()
 	}
 }
 
-void MST::generate(int liczbaWierzcholkow, int gestosc)
+void MST::generate(int liczbaWierzcholkow1, int gestosc)
 {
-	liczbaWierzcholkow = liczbaWierzcholkow;
+	srand(time(NULL));
+	clear();
+	liczbaWierzcholkow = liczbaWierzcholkow1;
 	macierz = new int* [liczbaWierzcholkow];
+	liczbaKrawedzi = liczbaWierzcholkow*(liczbaWierzcholkow-1)/2*gestosc/100;
+	int pozostaleKrawedzie = liczbaKrawedzi;
+	int value;
+	//inicjalizacja macierzy i listy sasiadow
 	for (int i = 0; i < liczbaWierzcholkow; i++) {
 		int* temp = new int[liczbaWierzcholkow];
 		vector<sasiedzi> nowySasiad;
@@ -84,6 +90,39 @@ void MST::generate(int liczbaWierzcholkow, int gestosc)
 			temp[j] = 0;
 		}
 		macierz[i] = temp;
+	}
+	//stworzenie drzewa rozpinajacego
+	for (int i = 1; i < liczbaWierzcholkow; i++) {
+		sasiedzi nowySasiad, nowySasiad1;
+		value = rand() % liczbaWierzcholkow + 1;
+		macierz[i-1][i] = value;
+		macierz[i][i - 1] = value;
+		nowySasiad1.v1 = i - 1;
+		nowySasiad1.waga = value;
+		nowySasiad.v1 = i;
+		nowySasiad.waga = value;
+		listaSasiadow[i].push_back(nowySasiad1);
+		listaSasiadow[i-1].push_back(nowySasiad);
+		pozostaleKrawedzie--;
+	}
+	int v1, v2;
+	//dodanie pozosta³ych krawedzi
+	while (pozostaleKrawedzie > 0) {
+		v1 = rand() % liczbaWierzcholkow;
+		v2 = rand() % liczbaWierzcholkow;
+		if (v1 == v2 || macierz[v1][v2] != 0)
+			continue;
+		value = rand() % liczbaWierzcholkow + 1;
+		sasiedzi nowySasiad, nowySasiad1;
+		macierz[v1][v2] = value;
+		macierz[v2][v1] = value;
+		nowySasiad1.v1 = v2;
+		nowySasiad1.waga = value;
+		nowySasiad.v1 = v1;
+		nowySasiad.waga = value;
+		listaSasiadow[v1].push_back(nowySasiad1);
+		listaSasiadow[v2].push_back(nowySasiad);
+		pozostaleKrawedzie--;
 	}
 }
 

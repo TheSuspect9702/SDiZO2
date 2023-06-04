@@ -85,8 +85,8 @@ void menu_ShortestPath() {
         cout << "1.Wczytaj z pliku" << endl;
         cout << "2.Utworz losowo" << endl;
         cout << "3.Wyswietl" << endl;
-        cout << "4.Algorytm Prima dla macierzy" << endl;
-        cout << "5.Algorytm Prima dla listy" << endl;
+        cout << "4.Algorytm Dijkstry dla macierzy" << endl;
+        cout << "5.Algorytm Dijkstry dla listy" << endl;
         cout << "6.Test (pomiary)" << endl;
         cout << "0.Powrot do menu" << endl;
         cout << "Podaj opcje: ";
@@ -112,9 +112,12 @@ void menu_ShortestPath() {
             myDijkstra.display();
             break;
         case '4':
+            myDijkstra.dijkstraMacierz();
+            myDijkstra.displayDijkstraMacierz();
             break;
         case '5':
-            
+            myDijkstra.dijkstraLista();
+            myDijkstra.displayDijkstraList();
             break;
         case '6':
             myDijkstra.test();
