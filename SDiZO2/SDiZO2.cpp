@@ -113,11 +113,13 @@ void menu_ShortestPath() {
             break;
         case '4':
             myDijkstra.dijkstraMacierz();
-            myDijkstra.displayDijkstraMacierz();
+            for (int i = 0; i< myDijkstra.liczbaWierzcholkow; i++)
+                myDijkstra.displayDijkstraMacierz(i);
             break;
         case '5':
             myDijkstra.dijkstraLista();
-            myDijkstra.displayDijkstraList();
+            for (int i = 0; i < myDijkstra.liczbaWierzcholkow; i++)
+                myDijkstra.displayDijkstraMacierz(i);
             break;
         case '6':
             myDijkstra.test();

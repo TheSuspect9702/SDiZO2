@@ -129,11 +129,13 @@
   <ItemGroup>
     <ClCompile Include="Dijkstra.cpp" />
     <ClCompile Include="MST.cpp" />
+    <ClCompile Include="Pomiary.cpp" />
     <ClCompile Include="SDiZO2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dijkstra.h" />
     <ClInclude Include="MST.h" />
+    <ClInclude Include="Pomiary.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="droga1.txt" />

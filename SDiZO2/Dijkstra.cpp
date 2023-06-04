@@ -1,4 +1,5 @@
 #include "Dijkstra.h"
+#include "Pomiary.h"
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -230,7 +231,7 @@ void Dijkstra::dijkstraLista()
 		nowysasiad.waga = tablicaDikstra[i].waga;
 		nowysasiad.visited = false;
 		nowysasiad.v1 = i;
-		if(i!=first)
+		if(i != first)
 			listaSasiadowDijkstra[tablicaDikstra[i].v1].push_back(nowysasiad);
 	}
 }
@@ -240,27 +241,24 @@ void Dijkstra::test()
 
 }
 
-void Dijkstra::displayDijkstraMacierz()
+void Dijkstra::displayDijkstraMacierz(int x)
 {
-	cout << "MACIERZ SASIEDZTWA" << endl << " ";
-	for (int i = 0; i < liczbaWierzcholkow; i++)
-		cout << " " << i;
-	for (int i = 0; i < liczbaWierzcholkow; i++) {
-		cout << endl << i << " ";
-		for (int j = 0; j < liczbaWierzcholkow; j++) {
-			cout << macierzDijkstra[i][j] << " ";
-		}
+	if (x == first)
+		cout << "Wierzcholek: " << x << " koszt: - droga: - " << endl;
+	else {
+		cout << "Wierzcholek: " << x << " koszt: " << tablicaDikstra[x].waga << " droga: ";
+		displayDijkstra(x);
+		cout << endl;
 	}
 }
 
-void Dijkstra::displayDijkstraList()
+void Dijkstra::displayDijkstra(int x)
 {
-	cout << endl << "LISTA SASIADOW";
-	for (int i = 0; i < listaSasiadowDijkstra.size(); i++) {
-		cout << endl << i;
-		for (int j = 0; j < listaSasiadowDijkstra[i].size(); j++) {
-			cout << " => " << listaSasiadowDijkstra[i][j].v1 << ":" << listaSasiadowDijkstra[i][j].waga;
-		}
+	if (x == first)
+		cout << x;
+	else {
+		displayDijkstra(tablicaDikstra[x].v1);
+		cout << " => " <<  x;
 	}
 }
 

@@ -16,14 +16,15 @@ public:
 	void dijkstraMacierz();
 	void dijkstraLista();
 	void test();
-	void displayDijkstraMacierz();
-	void displayDijkstraList();
+	void displayDijkstraMacierz(int x);
+	void displayDijkstra(int x);
+	int liczbaWierzcholkow;
+
 private:
 	void clearDijkstraMacierz();
 	void clearDijkstraList();
 	int** macierz;
 	int** macierzDijkstra;
-	int liczbaWierzcholkow;
 	int liczbaKrawedzi;
 	vector<vector<sasiedzi>> listaSasiadow;
 	vector<vector<sasiedzi>> listaSasiadowDijkstra;
