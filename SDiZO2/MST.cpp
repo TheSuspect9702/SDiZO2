@@ -198,7 +198,7 @@ void MST::test()
 	double timeList = 0;
 	double timeMacierz = 0;
 	for (int i = 0; i < 100; i++) {
-		generate(100, 20);
+		generate(250, 99);
 		pomiar.StartCounter();
 		primLista();
 		timeList += pomiar.GetCounter();

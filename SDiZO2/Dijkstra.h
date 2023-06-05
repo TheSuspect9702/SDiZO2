@@ -8,6 +8,9 @@ class Dijkstra
 struct sasiedzi {
 	int v1, waga;
 	bool visited;
+	bool operator<(const sasiedzi& other) const {
+		return waga > other.waga;
+	}
 };
 public:
 	void loadFromFile(string fileName);
@@ -23,11 +26,10 @@ public:
 private:
 	void clearDijkstraMacierz();
 	void clearDijkstraList();
+	priority_queue<sasiedzi> kolejkaDikstra;
 	int** macierz;
-	int** macierzDijkstra;
 	int liczbaKrawedzi;
 	vector<vector<sasiedzi>> listaSasiadow;
-	vector<vector<sasiedzi>> listaSasiadowDijkstra;
 	vector<sasiedzi> tablicaDikstra;
 	void clear();
 	int first;

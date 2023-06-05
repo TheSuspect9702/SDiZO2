@@ -7,18 +7,20 @@
 #include <queue>
 #include <algorithm>
 using namespace std;
-
+Pomiary pomiar1;
 
 void Dijkstra::clearDijkstraMacierz()
 {
 	tablicaDikstra.clear();
-	delete[] macierzDijkstra;
+	while (!kolejkaDikstra.empty())
+		kolejkaDikstra.pop();
 }
 
 void Dijkstra::clearDijkstraList()
 {
 	tablicaDikstra.clear();
-	listaSasiadowDijkstra.clear();
+	while (!kolejkaDikstra.empty())
+		kolejkaDikstra.pop();
 }
 
 
@@ -88,9 +90,10 @@ void Dijkstra::generate(int liczbaWierzcholkow1, int gestosc)
 {
 	srand(time(NULL));
 	clear();
+	first = 0;
 	liczbaWierzcholkow = liczbaWierzcholkow1;
 	macierz = new int* [liczbaWierzcholkow];
-	liczbaKrawedzi = liczbaWierzcholkow * (liczbaWierzcholkow - 1) / 2 * gestosc / 100;
+	liczbaKrawedzi = liczbaWierzcholkow * (liczbaWierzcholkow - 1) * gestosc / 100;
 	int pozostaleKrawedzie = liczbaKrawedzi;
 	int value;
 	//inicjalizacja macierzy i listy sasiadow
@@ -113,6 +116,13 @@ void Dijkstra::generate(int liczbaWierzcholkow1, int gestosc)
 		listaSasiadow[i - 1].push_back(nowySasiad);
 		pozostaleKrawedzie--;
 	}
+	sasiedzi nowySasiad;
+	value = rand() % liczbaWierzcholkow + 1;
+	macierz[liczbaWierzcholkow - 1][0] = value;
+	nowySasiad.v1 = 0;
+	nowySasiad.waga = value;
+	listaSasiadow[liczbaWierzcholkow-1].push_back(nowySasiad);
+	pozostaleKrawedzie--;
 	int v1, v2;
 	//dodanie pozosta³ych krawedzi
 	while (pozostaleKrawedzie > 0) {
@@ -149,38 +159,17 @@ void Dijkstra::dijkstraMacierz()
 			if (macierz[current][i] > 0 && i != first && (macierz[current][i] + tablicaDikstra[current].waga < tablicaDikstra[i].waga || tablicaDikstra[i].waga == -1)) {
 				tablicaDikstra[i].v1 = current;
 				tablicaDikstra[i].waga = macierz[current][i] + tablicaDikstra[current].waga;
+				sasiedzi nowySasiad;
+				nowySasiad.v1 = i;
+				nowySasiad.waga = tablicaDikstra[i].waga;
+				kolejkaDikstra.push(nowySasiad);
 			}
 		}
-		for (int i = 0; i < tablicaDikstra.size(); i++) {
-			if (tablicaDikstra[i].waga > 0 && !tablicaDikstra[i].visited && tablicaDikstra[current].visited) {
-				current = i;
-			}
-			else if (tablicaDikstra[i].waga < tablicaDikstra[current].waga && !tablicaDikstra[current].visited && tablicaDikstra[i].waga > 0 && !tablicaDikstra[i].visited) {
-				current = i;
-			}
-		}
-		if(tablicaDikstra[current].visited)
-			for (int i = 0; i < tablicaDikstra.size(); i++) {
-				if (!tablicaDikstra[i].visited && tablicaDikstra[current].visited) {
-					current = i;
-				}
-				else if (!tablicaDikstra[i].visited && tablicaDikstra[i].waga < tablicaDikstra[current].waga) {
-					current = i;
-				}
-			}
+		while (kolejkaDikstra.size() > 0 && tablicaDikstra[kolejkaDikstra.top().v1].visited)
+			kolejkaDikstra.pop();
+		if (kolejkaDikstra.size() > 0)
+			current = kolejkaDikstra.top().v1;
 	} while (!tablicaDikstra[current].visited);
-	macierzDijkstra = new int* [liczbaWierzcholkow];
-	for (int i = 0; i < liczbaWierzcholkow; i++) {
-		int* temp = new int[liczbaWierzcholkow];
-		for (int j = 0; j < liczbaWierzcholkow; j++) {
-			temp[j] = 0;
-		}
-		macierzDijkstra[i] = temp;
-	}
-	for (int i = 0; i < tablicaDikstra.size(); i++) {
-		if(tablicaDikstra[i].v1 != -1)
-			macierzDijkstra[tablicaDikstra[i].v1][i] = tablicaDikstra[i].waga;
-	}
 }
 
 void Dijkstra::dijkstraLista()
@@ -202,43 +191,36 @@ void Dijkstra::dijkstraLista()
 			if (listaSasiadow[current][i].v1 != first && (listaSasiadow[current][i].waga + tablicaDikstra[current].waga < tablicaDikstra[listaSasiadow[current][i].v1].waga || tablicaDikstra[listaSasiadow[current][i].v1].waga == -1)) {
 				tablicaDikstra[listaSasiadow[current][i].v1].v1 = current;
 				tablicaDikstra[listaSasiadow[current][i].v1].waga = listaSasiadow[current][i].waga + tablicaDikstra[current].waga;
+				sasiedzi nowySasiad;
+				nowySasiad.v1 = listaSasiadow[current][i].v1;
+				nowySasiad.waga = tablicaDikstra[listaSasiadow[current][i].v1].waga;
+				kolejkaDikstra.push(nowySasiad);
 			}
+
 		}
-		for (int i = 0; i < tablicaDikstra.size(); i++) {
-			if (tablicaDikstra[i].waga > 0 && !tablicaDikstra[i].visited && tablicaDikstra[current].visited) {
-				current = i;
-			}
-			else if (tablicaDikstra[i].waga < tablicaDikstra[current].waga && !tablicaDikstra[current].visited && tablicaDikstra[i].waga > 0 && !tablicaDikstra[i].visited) {
-				current = i;
-			}
-		}
-		if (tablicaDikstra[current].visited)
-			for (int i = 0; i < tablicaDikstra.size(); i++) {
-				if (!tablicaDikstra[i].visited && tablicaDikstra[current].visited) {
-					current = i;
-				}
-				else if (!tablicaDikstra[i].visited && tablicaDikstra[i].waga < tablicaDikstra[current].waga) {
-					current = i;
-				}
-			}
+		while (kolejkaDikstra.size() > 0 && tablicaDikstra[kolejkaDikstra.top().v1].visited)
+			kolejkaDikstra.pop();
+		if (kolejkaDikstra.size() > 0)
+			current = kolejkaDikstra.top().v1;
+		
 	} while (!tablicaDikstra[current].visited);
-	for (int i = 0; i < liczbaWierzcholkow; i++) {
-		vector<sasiedzi> nowySasiad;
-		listaSasiadowDijkstra.push_back(nowySasiad);
-	}
-	for (int i = 0; i < tablicaDikstra.size(); i++) {
-		sasiedzi nowysasiad;
-		nowysasiad.waga = tablicaDikstra[i].waga;
-		nowysasiad.visited = false;
-		nowysasiad.v1 = i;
-		if(i != first)
-			listaSasiadowDijkstra[tablicaDikstra[i].v1].push_back(nowysasiad);
-	}
 }
 
 void Dijkstra::test()
 {
-
+	double timeList = 0;
+	double timeMacierz = 0;
+	for (int i = 0; i < 100; i++) {
+		generate(250, 20);
+		pomiar1.StartCounter();
+		dijkstraLista();
+		timeList += pomiar1.GetCounter();
+		pomiar1.StartCounter();
+		dijkstraMacierz();
+		timeMacierz += pomiar1.GetCounter();
+	}
+	cout << "\nSredni czas algorytmu dla listy: " << timeList * 10000;
+	cout << "\nSredni czas algorytmu dla macierzy: " << timeMacierz * 10000;
 }
 
 void Dijkstra::displayDijkstraMacierz(int x)
