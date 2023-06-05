@@ -20,11 +20,10 @@ public:
 	void dijkstraLista();
 	void test();
 	void displayDijkstraMacierz(int x);
-	void displayDijkstra(int x);
 	int liczbaWierzcholkow;
-
 private:
 	void clearDijkstraMacierz();
+	void displayDijkstra(int x);
 	void clearDijkstraList();
 	priority_queue<sasiedzi> kolejkaDikstra;
 	int** macierz;

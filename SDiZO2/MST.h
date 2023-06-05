@@ -18,13 +18,8 @@ class MST
 	
 {
 public:
-	vector<int> visited;
+	
 	int waga;
-	priority_queue<Edge> edges;
-	int** macierz;
-	int** treeMatrix;
-	vector<vector<sasiedzi>> treeList;
-	vector<vector<sasiedzi>> listaSasiadow;
 	int liczbaWierzcholkow;
 	int liczbaKrawedzi;
 	void loadFromFile(string fileName);
@@ -33,8 +28,16 @@ public:
 	void primMacierz();
 	void primLista();
 	void test();
-	void clearTreeMatrix();	
+	int** treeMatrix;
+	vector<vector<sasiedzi>> treeList;
+	
+private:
+	void clearTreeMatrix();
 	void clearTreeList();
 	void clear();
+	priority_queue<Edge> edges;
+	int** macierz;
+	vector<vector<sasiedzi>> listaSasiadow;
+	vector<int> visited;
 };
 
